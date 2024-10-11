@@ -3,10 +3,10 @@ import {
   createUserSchema,
   loginSchema,
   usersTable,
-} from '../../db/usersSchema';
-import { validateData } from '../../middlewares/validationMiddleware';
+} from '../../db/usersSchema.js';
+import { validateData } from '../../middlewares/validationMiddleware.js';
 import bcrypt from 'bcryptjs';
-import { db } from '../../db/index';
+import { db } from '../../db/index.js';
 import { eq } from 'drizzle-orm';
 import jwt from 'jsonwebtoken';
 
