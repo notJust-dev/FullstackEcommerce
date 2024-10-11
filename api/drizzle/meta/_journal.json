@@ -15,6 +15,13 @@
       "when": 1728665509061,
       "tag": "0001_lonely_bromley",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1728670335381,
+      "tag": "0002_odd_ironclad",
+      "breakpoints": true
     }
   ]
 }
