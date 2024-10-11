@@ -15,15 +15,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "drizzle-orm": "^0.34.1",
     "drizzle-zod": "^0.5.1",
     "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "pg": "^8.13.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash": "^4.17.10",
     "@types/pg": "^8.11.10",
     "drizzle-kit": "^0.25.0",
