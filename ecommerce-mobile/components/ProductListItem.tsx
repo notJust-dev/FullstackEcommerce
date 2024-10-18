@@ -6,10 +6,11 @@ import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
 
 export default function ProductListItem({ product }) {
+  console.log('Rerender proiduct item');
   return (
     <Link href={`/product/${product.id}`} asChild>
       <Pressable className="flex-1">
-        <Card className="p-5 rounded-lg max-w-[360px] flex-1">
+        <Card className="p-5 rounded-lg flex-1">
           <Image
             source={{
               uri: product.image,
