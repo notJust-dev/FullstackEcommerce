@@ -12,6 +12,12 @@ import jwt from 'jsonwebtoken';
 
 const router = Router();
 
+const generateUserToken = (user: any) => {
+  return jwt.sign({ userId: user.id, role: user.role }, 'your-secret', {
+    expiresIn: '30d',
+  });
+};
+
 router.post('/register', validateData(createUserSchema), async (req, res) => {
   try {
     const data = req.cleanBody;
@@ -21,9 +27,11 @@ router.post('/register', validateData(createUserSchema), async (req, res) => {
 
     // @ts-ignore
     delete user.password;
+    const token = generateUserToken(user);
 
-    res.status(201).json({ user });
+    res.status(201).json({ user, token });
   } catch (e) {
+    console.log(e);
     res.status(500).send('Something went wrong');
   }
 });
@@ -48,12 +56,7 @@ router.post('/login', validateData(loginSchema), async (req, res) => {
     }
 
     // create a jwt token
-    const token = jwt.sign(
-      { userId: user.id, role: user.role },
-      'your-secret',
-      { expiresIn: '30d' }
-    );
-
+    const token = generateUserToken(user);
     // @ts-ignore
     delete user.password;
     res.status(200).json({ token, user });
