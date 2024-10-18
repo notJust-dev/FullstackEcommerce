@@ -6,7 +6,6 @@ import { Link } from 'expo-router';
 import { Pressable } from 'react-native';
 
 export default function ProductListItem({ product }) {
-  console.log('Rerender proiduct item');
   return (
     <Link href={`/product/${product.id}`} asChild>
       <Pressable className="flex-1">

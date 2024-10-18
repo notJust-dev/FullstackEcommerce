@@ -15,6 +15,7 @@
     "@gluestack-ui/nativewind-utils": "^1.0.25",
     "@gluestack-ui/overlay": "^0.1.15",
     "@gluestack-ui/toast": "^1.0.7",
+    "@tanstack/react-query": "^5.59.15",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
