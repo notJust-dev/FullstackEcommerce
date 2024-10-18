@@ -5,14 +5,34 @@ import { useCart } from '@/store/cartStore';
 import { View, FlatList } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Redirect } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
+import { createOrder } from '@/api/orders';
 
 export default function CartScreen() {
   const items = useCart((state) => state.items);
   const resetCart = useCart((state) => state.resetCart);
 
+  const createOrderMutation = useMutation({
+    mutationFn: () =>
+      createOrder(
+        items.map((item) => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          price: item.product.price, // MANAGE FORM SERVER SIDE
+        }))
+      ),
+    onSuccess: (data) => {
+      console.log(data);
+
+      resetCart();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const onCheckout = async () => {
-    // send order to server
-    resetCart();
+    createOrderMutation.mutate();
   };
 
   if (items.length === 0) {
