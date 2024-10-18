@@ -9,7 +9,9 @@
     "web": "DARK_MODE=media expo start --web"
   },
   "dependencies": {
+    "@expo/html-elements": "^0.4.2",
     "@gluestack-ui/button": "^1.0.7",
+    "@gluestack-ui/image": "^0.1.10",
     "@gluestack-ui/nativewind-utils": "^1.0.25",
     "@gluestack-ui/overlay": "^0.1.15",
     "@gluestack-ui/toast": "^1.0.7",
