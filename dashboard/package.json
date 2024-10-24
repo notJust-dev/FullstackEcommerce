@@ -22,6 +22,7 @@
     "@gluestack-ui/toast": "^1.0.7",
     "@gluestack/ui-next-adapter": "^2.1.12",
     "autoprefixer": "^10.4.20",
+    "dayjs": "^1.11.13",
     "lucide-react-native": "^0.453.0",
     "nativewind": "^4.0.36",
     "next": "14.2.15",
