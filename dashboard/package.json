@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@expo/html-elements": "^0.4.2",
+    "@gluestack-ui/actionsheet": "^0.2.45",
     "@gluestack-ui/avatar": "^0.1.17",
     "@gluestack-ui/button": "^1.0.7",
     "@gluestack-ui/form-control": "^0.1.18",
@@ -19,8 +20,10 @@
     "@gluestack-ui/input": "^0.1.31",
     "@gluestack-ui/nativewind-utils": "^1.0.23",
     "@gluestack-ui/overlay": "^0.1.15",
+    "@gluestack-ui/select": "^0.1.29",
     "@gluestack-ui/toast": "^1.0.7",
     "@gluestack/ui-next-adapter": "^2.1.12",
+    "@legendapp/motion": "^2.4.0",
     "autoprefixer": "^10.4.20",
     "dayjs": "^1.11.13",
     "lucide-react-native": "^0.453.0",
