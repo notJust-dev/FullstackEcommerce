@@ -13,6 +13,7 @@
     "@expo/html-elements": "^0.4.2",
     "@gluestack-ui/button": "^1.0.7",
     "@gluestack-ui/form-control": "^0.1.18",
+    "@gluestack-ui/icon": "^0.1.22",
     "@gluestack-ui/image": "^0.1.10",
     "@gluestack-ui/input": "^0.1.31",
     "@gluestack-ui/nativewind-utils": "^1.0.23",
