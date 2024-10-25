@@ -4,7 +4,7 @@ import { Text } from '@/components/ui/text';
 import { useCart } from '@/store/cartStore';
 import { View, FlatList, Alert } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
-import { Redirect } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { createOrder } from '@/api/orders';
 import { createPaymentIntent } from '@/api/stripe';
@@ -38,15 +38,15 @@ export default function CartScreen() {
         Alert.alert('Error', error.message);
         console.log(error);
       }
+
+      openPaymentSheet();
     },
     onError: (error) => {
       console.log(error);
     },
   });
 
-  useEffect(() => {
-    paymentIntentMutation.mutate();
-  }, []);
+  const router = useRouter();
 
   const createOrderMutation = useMutation({
     mutationFn: () =>
@@ -58,9 +58,7 @@ export default function CartScreen() {
         }))
       ),
     onSuccess: (data) => {
-      console.log(data);
-
-      resetCart();
+      paymentIntentMutation.mutate({ orderId: data.id });
     },
     onError: (error) => {
       console.log(error);
@@ -72,14 +70,19 @@ export default function CartScreen() {
 
     if (error) {
       Alert.alert(`Error code: ${error.code}`, error.message);
+      // TODO: handle error. The order is submitted, but payment failed.
     } else {
       Alert.alert('Success', 'Your order is confirmed!');
+      resetCart();
+      // router.push(`/orders/${orderId}`);
+      router.replace('/');
     }
   };
 
   const onCheckout = async () => {
-    openPaymentSheet();
-    // createOrderMutation.mutate();
+    createOrderMutation.mutateAsync();
+
+    // openPaymentSheet();
   };
 
   if (items.length === 0) {
