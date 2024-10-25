@@ -7,6 +7,7 @@ declare global {
       userId?: Number;
       cleanBody?: any;
       role: string;
+      rawBody?: Buffer;
     }
   }
 }

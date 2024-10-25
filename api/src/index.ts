@@ -1,4 +1,4 @@
-import express, { json, urlencoded } from 'express';
+import express, { json, urlencoded, Request } from 'express';
 import productsRoutes from './routes/products/index.js';
 import authRoutes from './routes/auth/index.js';
 import ordersRoutes from './routes/orders/index.js';
@@ -10,7 +10,13 @@ const port = 3001;
 const app = express();
 
 app.use(urlencoded({ extended: false }));
-app.use(json());
+app.use(
+  json({
+    verify: (req: Request, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

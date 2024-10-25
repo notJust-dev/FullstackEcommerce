@@ -33,6 +33,7 @@ export default function CartScreen() {
         defaultBillingDetails: {
           name: 'Jane Doe',
         },
+        // returnURL: 'notjust-ecom:/',
       });
       if (error) {
         Alert.alert('Error', error.message);
