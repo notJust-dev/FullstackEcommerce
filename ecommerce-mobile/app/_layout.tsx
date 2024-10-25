@@ -8,48 +8,50 @@ import { Pressable } from 'react-native';
 import { useCart } from '@/store/cartStore';
 import { Text } from '@/components/ui/text';
 import { useAuth } from '@/store/authStore';
+import CustomStripeProvider from '@/components/CustomStripeProvider';
 
 // Create a client
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const cartItemsNum = useCart((state) => state.items.length);
-
   const isLoggedIn = useAuth((s) => !!s.token);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <GluestackUIProvider>
-        <Stack
-          screenOptions={{
-            headerRight: () =>
-              cartItemsNum > 0 && (
-                <Link href={'/cart'} asChild>
-                  <Pressable className="flex-row gap-2">
-                    <Icon as={ShoppingCart} />
-                    <Text>{cartItemsNum}</Text>
-                  </Pressable>
-                </Link>
-              ),
-          }}
-        >
-          <Stack.Screen
-            name="index"
-            options={{
-              title: 'Shop',
-              headerLeft: () =>
-                !isLoggedIn && (
-                  <Link href={'/login'} asChild>
+      <CustomStripeProvider>
+        <GluestackUIProvider>
+          <Stack
+            screenOptions={{
+              headerRight: () =>
+                cartItemsNum > 0 && (
+                  <Link href={'/cart'} asChild>
                     <Pressable className="flex-row gap-2">
-                      <Icon as={User} />
+                      <Icon as={ShoppingCart} />
+                      <Text>{cartItemsNum}</Text>
                     </Pressable>
                   </Link>
                 ),
             }}
-          />
-          <Stack.Screen name="product/[id]" options={{ title: 'Product' }} />
-        </Stack>
-      </GluestackUIProvider>
+          >
+            <Stack.Screen
+              name="index"
+              options={{
+                title: 'Shop',
+                headerLeft: () =>
+                  !isLoggedIn && (
+                    <Link href={'/login'} asChild>
+                      <Pressable className="flex-row gap-2">
+                        <Icon as={User} />
+                      </Pressable>
+                    </Link>
+                  ),
+              }}
+            />
+            <Stack.Screen name="product/[id]" options={{ title: 'Product' }} />
+          </Stack>
+        </GluestackUIProvider>
+      </CustomStripeProvider>
     </QueryClientProvider>
   );
 }

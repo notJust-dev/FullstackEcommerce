@@ -2,15 +2,51 @@ import { HStack } from '@/components/ui/hstack';
 import { VStack } from '@/components/ui/vstack';
 import { Text } from '@/components/ui/text';
 import { useCart } from '@/store/cartStore';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Alert } from 'react-native';
 import { Button, ButtonText } from '@/components/ui/button';
 import { Redirect } from 'expo-router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { createOrder } from '@/api/orders';
+import { createPaymentIntent } from '@/api/stripe';
+import { useEffect } from 'react';
+import { useStripe } from '@stripe/stripe-react-native';
 
 export default function CartScreen() {
   const items = useCart((state) => state.items);
   const resetCart = useCart((state) => state.resetCart);
+
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+  const paymentIntentMutation = useMutation({
+    mutationFn: createPaymentIntent,
+    onSuccess: async (data) => {
+      const { customer, ephemeralKey, paymentIntent } = data;
+
+      const { error } = await initPaymentSheet({
+        merchantDisplayName: 'Example, Inc.',
+        customerId: customer,
+        customerEphemeralKeySecret: ephemeralKey,
+        paymentIntentClientSecret: paymentIntent,
+        // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+        //methods that complete payment after a delay, like SEPA Debit and Sofort.
+        // allowsDelayedPaymentMethods: true,
+        defaultBillingDetails: {
+          name: 'Jane Doe',
+        },
+      });
+      if (error) {
+        Alert.alert('Error', error.message);
+        console.log(error);
+      }
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    paymentIntentMutation.mutate();
+  }, []);
 
   const createOrderMutation = useMutation({
     mutationFn: () =>
@@ -31,8 +67,19 @@ export default function CartScreen() {
     },
   });
 
+  const openPaymentSheet = async () => {
+    const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Alert.alert('Success', 'Your order is confirmed!');
+    }
+  };
+
   const onCheckout = async () => {
-    createOrderMutation.mutate();
+    openPaymentSheet();
+    // createOrderMutation.mutate();
   };
 
   if (items.length === 0) {

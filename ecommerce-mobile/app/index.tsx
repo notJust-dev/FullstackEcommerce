@@ -29,7 +29,7 @@ export default function HomeScreen() {
   return (
     <FlatList
       key={numColumns}
-      data={data}
+      data={data.splice(0, 10)}
       numColumns={numColumns}
       contentContainerClassName="gap-2 max-w-[960px] mx-auto w-full"
       columnWrapperClassName="gap-2"
